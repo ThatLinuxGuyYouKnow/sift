@@ -1,0 +1,19 @@
+.user-query-bar{
+    background: #201E2A;
+    color: #D9B4FB;
+    margin: 1 2;
+    padding: 1 2;
+    height: auto;
+
+}
+
+.user-query-tag{
+
+    color: rgb(111,0,190);
+    width: auto;
+}
+
+.user-query{
+
+    width: 1fr
+}

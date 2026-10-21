@@ -1,0 +1,31 @@
+#tool-bar {
+    layout: vertical;
+    background: #16141E;
+    margin: 1 2;
+    padding: 1 2;
+    height: auto;
+    
+}
+
+#tool-title {
+    text-style: bold;
+    color: rgb(111,0,190);
+}
+
+#tool-body {
+    color: #E8E8E8;
+}
+
+#partial_tool {
+
+    background: #201E2A;
+    color: #0A0A0F;
+    margin: 2 4;
+    padding: 1 2;
+    height: 2h;
+}
+
+#tool {
+    background: #131839;
+    height: 20;
+}
