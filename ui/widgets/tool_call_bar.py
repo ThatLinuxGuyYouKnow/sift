@@ -15,11 +15,11 @@ class ToolCallBar(Vertical):
 
     def set_title(self, title: str) -> None:
         self._title = title
-        self.query_one("#tool-title", Label).update(title)
+        self.query_one(".tool-title", Label).update(title)
 
     def update_content(self, content: str) -> None:
         self._body = content
-        self.query_one("#tool-body", Static).update(content)
+        self.query_one(".tool-body", Static).update(content)
 
     def append_content(self, chunk: str) -> None:
         self.update_content(self._body + chunk)

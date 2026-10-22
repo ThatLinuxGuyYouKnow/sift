@@ -19,7 +19,7 @@ class AgentResponseWidget(Horizontal):
     def update(self, text: str):
 
         self._buffer += text
-        self.query_one('#agent-response-body', Static).update(Text(self._buffer))
+        self.query_one('.agent-response-body', Static).update(Text(self._buffer))
 
 
 

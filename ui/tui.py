@@ -19,7 +19,7 @@ from ui.widgets.tool_call_bar import ToolCallBar
 from ui.widgets.user_query_widget import UserQueryWidget
 from agents.herr import MainAgent
 from prompts.main import GeneralPrompts
-from handlers.handle_prompt_input import handlePrompt
+
 
 
 class SiftApp(App):
@@ -79,16 +79,15 @@ class SiftApp(App):
 
                     self.call_from_thread(response.update, event['content'])
 
-                case "name":
+                case "tool_call":
 
-                    self.call_from_thread(self._add_tool_call, event['name'], event['args'] | "")
-
+                    self.call_from_thread(self._add_tool_call, event['name'], event['args'])
         self.call_from_thread(self._finish)
 
 
     def _new_response(self) -> AgentResponseWidget:
 
-        feed = self.query_one(".content-sheet", VerticalScroll)
+        feed = self.query_one("#content_sheet", VerticalScroll)
         widget = AgentResponseWidget()
         feed.mount(widget)
         feed.scroll_end(animate= True)
@@ -97,7 +96,7 @@ class SiftApp(App):
 
     def _add_tool_call(self, name: str, args: dict) -> None:
 
-        feed = self.query_one('content-sheet', VerticalScroll)
+        feed = self.query_one('#content_sheet', VerticalScroll)
         widget = ToolCallBar(title = name, args = args)
 
         feed.mount(widget)
@@ -107,7 +106,7 @@ class SiftApp(App):
     def _finish(self):
         "Agent turn has finished, so re-enable the input field"
 
-        inp = self.query_one('.user_input', Input)
+        inp = self.query_one('#user_input', Input)
 
         inp.disabled = False
         #bring back into focus for users follow up
