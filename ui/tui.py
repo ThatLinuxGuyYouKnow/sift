@@ -38,14 +38,6 @@ class SiftApp(App):
 
     CSS_PATH = ["../style/tool_call_style.tcss", "../style/main.tcss", "../style/user_query_style.tcss", "../style/agent_response_style.tcss"]
 
-    
-
-    def on_mount(self):
-
-        feed = self.query_exactly_one('#content_sheet', VerticalScroll)
-        feed.mount(ToolCallBar(title="something something"))
-
-
 
 
     def compose(self):
@@ -67,6 +59,8 @@ class SiftApp(App):
             # slide to the very end of the chat on a new prompt
             feed.scroll_end(animate = True)
 
+            self.run_agent(user_prompt)
+
 
 
     @work(thread= True)
@@ -85,39 +79,39 @@ class SiftApp(App):
 
                     self.call_from_thread(response.update, event['content'])
 
-                case "tool_call":
+                case "name":
 
-                    self.call_from_thread(self._add_tool_call, event['name'], event['args'])
+                    self.call_from_thread(self._add_tool_call, event['name'], event['args'] | "")
 
         self.call_from_thread(self._finish)
 
 
-    async def _new_response(self) -> AgentResponseWidget:
+    def _new_response(self) -> AgentResponseWidget:
 
-        feed = self.query_one("content-sheet", VerticalScroll)
+        feed = self.query_one(".content-sheet", VerticalScroll)
         widget = AgentResponseWidget()
-        await feed.mount(widget)
+        feed.mount(widget)
         feed.scroll_end(animate= True)
 
         return widget
 
-    async def _add_tool_call(self, name: str, args: dict) -> None:
+    def _add_tool_call(self, name: str, args: dict) -> None:
 
         feed = self.query_one('content-sheet', VerticalScroll)
         widget = ToolCallBar(title = name, args = args)
 
-        await feed.mount(widget)
+        feed.mount(widget)
 
         feed.scroll_end()
 
     def _finish(self):
         "Agent turn has finished, so re-enable the input field"
 
-        inp = self.query_one('user_input', Input)
+        inp = self.query_one('.user_input', Input)
 
         inp.disabled = False
         #bring back into focus for users follow up
-        inp.focus
+        inp.focus()
 
 
 
