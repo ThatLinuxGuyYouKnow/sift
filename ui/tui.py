@@ -3,12 +3,14 @@ import sys
 from pathlib import Path
 from uuid import uuid4
 
-from ui.widgets.agent_response import AgentResponseWidget
+
 
 if __package__ in (None, ""):
     # Launched as `python ui/tui.py` or `textual run ui/tui.py`, which puts
     # `ui/` on sys.path. The project root is the import root, so add it.
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from ui.widgets.agent_response import AgentResponseWidget
 from textual import work
 from textual.app import App
 from textual.widgets import Input, Footer, Static
@@ -85,7 +87,7 @@ class SiftApp(App):
         self.call_from_thread(self._finish)
 
 
-    def _new_response(self) -> AgentResponseWidget:
+    async def _new_response(self) -> AgentResponseWidget:
 
         feed = self.query_one("#content_sheet", VerticalScroll)
         widget = AgentResponseWidget()
@@ -94,10 +96,10 @@ class SiftApp(App):
 
         return widget
 
-    def _add_tool_call(self, name: str, args: dict) -> None:
+    async def _add_tool_call(self, name: str, args: dict) -> None:
 
         feed = self.query_one('#content_sheet', VerticalScroll)
-        widget = ToolCallBar(title = name, args = args)
+        widget = ToolCallBar(title = name, content = str(args))
 
         feed.mount(widget)
 
