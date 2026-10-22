@@ -17,7 +17,7 @@ TOOLS = [url_context, light_search, crawl_website]
 class MainAgent():
 
 
-    def __init__(self, model:str, tools: list | None, api_key: SecretStr, base_url: str, thread_id : str, system_prompt: str):
+    def __init__(self, model:str, api_key: SecretStr, base_url: str, thread_id : str, system_prompt: str, tools: list | None = None):
 
         self.model = model
         self.api_key = api_key
@@ -52,20 +52,40 @@ class MainAgent():
         return {'configurable':{'thread_id':self.thread_id}}
 
 
-    def _stream(self, agent_input:Any):
+    def _stream(self, agent_input:Any) :
 
-        for mode, data in self.agent.stream(agent_input,config = self._config, stream_mode = ['messages', 'updates']):
-            if mode == 'messages':
-                chunk, _meta = data
+        #largely based off https://docs.langchain.com/oss/python/langchain/streaming
 
-                if isinstance(chunk, AIMessage):
+        stream = self.agent.stream_events(agent_input, version = "v3", config = self._config)
 
-                    yield {"type":"token", "content" : chunk.text}
+        for kind, item in stream.interleave("messages", "tool_calls"):
 
-            elif mode == "updates" and isinstance(data, dict):
-                interrupt = data.get("__interrupt__")
-                if interrupt is not None:
-                    yield {"type": "interrupt", "content": interrupt}
+
+            if kind == 'messages':
+
+                for delta in item.text:
+
+                    yield {'type':'token', 'content' : delta}
+
+
+            elif kind == 'tool_calls':
+
+                yield {'type' : 'tool_name' , 'content' : item.tool_name } 
+                yield {'type' : 'tool_input', 'content' : item.input}
+
+
+        # for mode, data in self.agent.stream(agent_input,config = self._config, stream_mode = ['messages', 'updates']):
+        #     if mode == 'messages':
+        #         chunk, _meta = data
+
+        #         if isinstance(chunk, AIMessage):
+
+        #             yield {"type":"token", "content" : chunk.text}
+
+        #     elif mode == "updates" and isinstance(data, dict):
+        #         interrupt = data.get("__interrupt__")
+        #         if interrupt is not None:
+        #             yield {"type": "interrupt", "content": interrupt}
 
 
 
