@@ -4,14 +4,14 @@ from textual.widgets import Label, Static
 class ToolCallBar(Vertical):
 
     def __init__(self, title: str = "Tool", content: str = "", **kwargs):
-        kwargs.setdefault("id", "tool-bar")
+        kwargs.setdefault("classes", "tool-bar")
         super().__init__(**kwargs)
         self._title = title
         self._body = content
 
     def compose(self):
-        yield Label(self._title, id="tool-title")
-        yield Static(self._body, id="tool-body")
+        yield Label(self._title, classes="tool-title")
+        yield Static(self._body, classes="tool-body")
 
     def set_title(self, title: str) -> None:
         self._title = title
