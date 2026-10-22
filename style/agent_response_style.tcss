@@ -1,7 +1,7 @@
-.agent-response{
+.agent-response {      
+    color: #FFB4AB; 
+} 
 
-    color: #FFB4AB
-}
-.agent-response-tag{
-    color : #DDB8FF
+.agent-response-tag {     
+    color: #DDB8FF; 
 }

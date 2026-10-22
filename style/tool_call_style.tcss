@@ -1,4 +1,4 @@
-#tool-bar {
+.tool-bar {
     layout: vertical;
     background: #16141E;
     margin: 1 2;
@@ -7,16 +7,16 @@
     
 }
 
-#tool-title {
+.tool-title {
     text-style: bold;
     color: rgb(111,0,190);
 }
 
-#tool-body {
+.tool-body {
     color: #E8E8E8;
 }
 
-#partial_tool {
+.partial_tool {
 
     background: #201E2A;
     color: #0A0A0F;
@@ -25,7 +25,7 @@
     height: 2h;
 }
 
-#tool {
+.tool {
     background: #131839;
     height: 20;
 }
