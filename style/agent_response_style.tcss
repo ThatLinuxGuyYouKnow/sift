@@ -1,7 +1,16 @@
 .agent-response {      
-    color: #FFB4AB; 
+    color: #490081; 
+    height: auto;
+    padding: 1 2;
+    margin: 1 2;
+    background: #DDB8FF
 } 
 
 .agent-response-tag {     
-    color: #DDB8FF; 
+    color: #ffffff; 
+    padding-right: 1
+}
+
+.agent-response-body{
+    width: 1fr
 }
