@@ -70,8 +70,8 @@ class MainAgent():
 
             elif kind == 'tool_calls':
 
-                yield {'type' : 'tool_name' , 'content' : item.tool_name } 
-                yield {'type' : 'tool_input', 'content' : item.input}
+                yield {'type' : 'tool_call' , 'name' : item.tool_name, 'args' : item.input } 
+    
 
 
         # for mode, data in self.agent.stream(agent_input,config = self._config, stream_mode = ['messages', 'updates']):
