@@ -1,9 +1,9 @@
 .agent-response {      
-    color: #490081; 
+    color: #ffff; 
     height: auto;
     padding: 1 2;
     margin: 1 2;
-    background: #DDB8FF
+    background: #0F0C18
 } 
 
 .agent-response-tag {     
