@@ -40,6 +40,11 @@ class SiftApp(App):
 
     CSS_PATH = ["../style/tool_call_style.tcss", "../style/main.tcss", "../style/user_query_style.tcss", "../style/agent_response_style.tcss"]
 
+    def on_mount(self):
+        #immediately bring the input field into focus on entry
+
+        inp = self.query_one('#user_input', Input)
+        inp.focus()
 
 
     def compose(self):
