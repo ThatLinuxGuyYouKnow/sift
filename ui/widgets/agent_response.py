@@ -1,4 +1,4 @@
-from textual.widgets import Static, Label
+from textual.widgets import Static, Label, Markdown
 from textual.containers import Horizontal
 from rich.text import Text
 class AgentResponseWidget(Horizontal):
@@ -13,13 +13,13 @@ class AgentResponseWidget(Horizontal):
 
         
         yield Label(classes= 'agent-response-tag',content= 'agent')
-        yield Static(classes='agent-response-body', content= '')
+        yield Markdown(classes='agent-response-body', markdown= '')
 
 
     def update(self, text: str):
 
         self._buffer += text
-        self.query_one('.agent-response-body', Static).update(Text(self._buffer))
+        self.query_one('.agent-response-body', Markdown).update(self._buffer)
 
 
 
